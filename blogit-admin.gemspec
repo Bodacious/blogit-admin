@@ -24,7 +24,9 @@ Gem::Specification.new do |s|
 
   # Debugging
   s.add_development_dependency "pry"
-
+  
+  s.add_development_dependency "spring"
+  
   # Databases
   s.add_development_dependency "sqlite3"
   s.add_development_dependency "mysql2"

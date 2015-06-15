@@ -8,7 +8,7 @@ require 'factories'
 require 'support/authentication'
 require 'pry'
 
-include Blogit
+include Blogit::Admin
 
 RSpec.configure do |config|
   config.mock_with :mocha

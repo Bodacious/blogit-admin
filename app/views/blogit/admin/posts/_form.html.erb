@@ -14,15 +14,18 @@
 
   <fieldset>
     <%= field do %>
-      <%= f.text_field :title, placeholder: t(:give_your_post_a_title, scope: 'blogit.posts') %>
+      <%= f.text_field :title, \
+        placeholder: t(:give_your_post_a_title, scope: 'blogit.posts') %>
     <% end %>
 
     <%= field do %>
-      <%= f.text_area :body, placeholder: t(:write_something_here, scope: 'blogit.posts') %>
+      <%= f.text_area :body, \
+        placeholder: t(:write_something_here, scope: 'blogit.posts') %>
     <% end %>
 
     <p class="blog_post_tip">
-      <%=t :tip_you_can_style_your_post_using, scope: 'blogit.posts', parser: blogit_conf.default_parser %>
+      <%= t :tip_you_can_style_your_post_using, \
+        scope: 'blogit.posts', parser: blogit_conf.default_parser %>
     </p>
 
   </fieldset>
@@ -43,7 +46,7 @@
 
   <%= actions do %>
     <%= f.submit %> <%=t :or, scope: 'blogit.posts'%>
-    <%= link_to(t(:cancel, scope: 'blogit.posts'), @post.new_record? ? blog_root_path : post_path(@post)) %>
+    <%= link_to(t(:cancel, scope: 'blogit.posts'), @post.new_record? ? blogit_admin.root_path : post_path(@post)) %>
   <% end %>
 
 <% end %>

@@ -13,6 +13,14 @@ module Blogit
       
       end
       
+      initializer "blogit-admin.extend_blogit_post" do
+        
+        Blogit::Post.class_eval do
+          include Blogit::Admin::ModelExtensions::Post
+        end
+        
+      end
+      
     end
   end
 end
