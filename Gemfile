@@ -1,5 +1,9 @@
 source "http://rubygems.org"
 
+warn "Still loading Blogit from gemfile"
+
+gem "blogit", path: "~/KatanaCode/blogit"
+
 # Declare your gem's dependencies in blogit.gemspec.
 # Bundler will treat runtime dependencies like base dependencies, and
 # development dependencies will be added by default to the :development group.
