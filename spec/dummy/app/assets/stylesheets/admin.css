@@ -1,0 +1,17 @@
+/* =================================== */
+/* = Some CSS for the dummy app only = */
+/* =================================== */
+
+/* 
+  *= require_tree . 
+  *= require blogit/admin
+*/
+
+@import 'base/epiceditor';  
+/*
+@import 'preview/bartik';
+@import 'preview/github';
+@import 'preview/preview-dark';
+@import 'editor/epic-dark';
+@import 'editor/epic-light';
+*/

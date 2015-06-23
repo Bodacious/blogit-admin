@@ -8,7 +8,7 @@ class SessionsController < ApplicationController
     if @user
       @current_user     = @user
       session[:user_id] = @user.id
-      redirect_to(root_url, notice: "Successfully logged in!")      
+      redirect_to(blogit_admin_url, notice: "Successfully logged in!")      
     else
       render :new
     end
