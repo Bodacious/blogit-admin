@@ -8,46 +8,53 @@ module Blogit
       layout Blogit.configuration.layout if Blogit.configuration.layout
       
       helper Blogit::PostsHelper
+      
+      attr_accessor :post
 
       def index
-        @posts ||= Post.for_admin_index(params[Kaminari.config.param_name])
+        set_posts
+        set_latest_comments
       end
 
       def show
-        @post = Post.find(params[:id])
+        Blogit::configuration.include_comments = :disqus
+        set_post_from_id(false)
+        set_latest_comments        
       end
 
       def new
-        @post = current_blogger.blog_posts.new(post_paramters)
-      end
-
-      def edit
-        @post = current_blogger.blog_posts.find(params[:id])
+        set_new_blogger_post_from_params
       end
 
       def create
-        @post = current_blogger.blog_posts.new(post_paramters)
-        if @post.save
-          redirect_to @post, notice: t(:blog_post_was_successfully_created, scope: 'blogit.posts')
+        set_new_blogger_post_from_params
+        if post.save
+          redirect_to post, 
+            notice: t(:blog_post_was_successfully_created, scope: 'blogit.admin.posts')
         else
           render action: "new"
         end
       end
+      
+      def edit
+        set_post_from_id(false)
+      end
 
       def update
-        @post = current_blogger.blog_posts.find(params[:id])
-        if @post.update_attributes(post_paramters)
-          redirect_to @post, notice: t(:blog_post_was_successfully_updated, 
-          scope: 'blogit.posts')
+        set_post_from_id(false)
+        if post.update_attributes(post_paramters)
+          redirect_to post, 
+            notice: t(:blog_post_was_successfully_updated, scope: 'blogit.admin.posts')
         else
           render action: "edit"
         end
       end
 
       def destroy
-        @post = current_blogger.blog_posts.find(params[:id])
-        @post.destroy
-        redirect_to posts_url, notice: t(:blog_post_was_successfully_destroyed, scope: 'blogit.posts')
+        set_post_from_id(false)
+        post.destroy
+        redirect_to posts_url, 
+          notice: t(:blog_post_was_successfully_destroyed, scope: 'blogit.admin.posts')
       end
 
       def post_paramters
@@ -58,10 +65,30 @@ module Blogit
         end
       end
 
+
       private
 
 
+      def set_post_from_id(must_be_own_post)
+        if must_be_own_post
+          @post = current_blogger.blog_posts.find(params[:id])
+        else
+          @post = Post.find(params[:id])
+        end
+      end
 
+      def set_posts
+        @posts = Post.for_admin_index(params[Kaminari.config.param_name])
+      end
+      
+      def set_latest_comments
+        @latest_comments = Comment.latest
+      end
+      
+      def set_new_blogger_post_from_params
+        @post = current_blogger.blog_posts.new(post_paramters)
+      end
+      
     end
 
   end

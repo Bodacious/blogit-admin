@@ -1,0 +1,34 @@
+%editable_form_field
+  padding: 0.25em 0.2em
+  font-size: 1em
+  border: thin solid $color-muted
+  transition: border-color 0.2s
+  
+  &:focus
+    border: thin solid $color-secondary-1
+    
+  
+.blogit_admin_form
+
+.blogit_admin_form-field_wrapper
+  display: block
+  margin: 1em 0
+
+
+.blogit_admin_form-field
+  display: block
+  width: 100%
+  @extend %editable_form_field  
+.blogit_admin_form-label
+  display: inline
+  
+.blogit_admin_form-editable_text_area
+  display: block
+  width: 100%
+  min-height: 10em
+  line-height: 1.56
+  @extend %editable_form_field  
+  
+  
+.blogit_admin_form-editable_text_area.is_epic_editor
+  display: none

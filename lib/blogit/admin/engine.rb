@@ -1,7 +1,9 @@
 module Blogit
   module Admin
     class Engine < Rails::Engine
-    
+      
+      BLOGIT_ADMIN_ROOT = File.join(File.dirname(__FILE__), "..", "..", "..")
+      
       isolate_namespace Blogit::Admin
     
       initializer "blogit-admin.extend_active_record" do
@@ -13,12 +15,12 @@ module Blogit
       
       end
       
-      initializer "blogit-admin.extend_blogit_post" do
-        
-        Blogit::Post.class_eval do
-          include Blogit::Admin::ModelExtensions::Post
+      
+      if Rails.env.development?
+        ActionDispatch::Callbacks.to_prepare do
+          load(File.join(BLOGIT_ADMIN_ROOT, "config", "initializers",
+            "extend_blogit_models.rb"))
         end
-        
       end
       
     end

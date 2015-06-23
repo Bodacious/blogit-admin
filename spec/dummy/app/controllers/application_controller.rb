@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::Base
-  
+    
   protect_from_forgery
   
   helper_method :current_user
@@ -8,6 +8,8 @@ class ApplicationController < ActionController::Base
     # session[:user_id] = User.first.id
     @current_user ||= User.find_by_id(session[:user_id])
   end
+  
+  def current_blogger() current_user end
   
   def login_required
     unless current_user

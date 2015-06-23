@@ -1,15 +1,10 @@
 module Blogit
   module Admin
 
+
+
     # Inherits from the application's controller instead of ActionController::Base
-    class ApplicationController < ::ApplicationController
-      
-      helper Blogit::ApplicationHelper
-      
-      helper_method :blogit_conf
-      
-      private
-      
+    class ApplicationController < Blogit.configuration.admin_application_controller_base_class.constantize
       
       def self.blogit_conf
         Blogit.configuration
@@ -18,13 +13,16 @@ module Blogit
       def blogit_conf
         self.class.blogit_conf
       end
+      
+      layout blogit_conf.admin_layout
+      helper Blogit::ApplicationHelper, Blogit::Admin::CommentsHelper,
+        Blogit::Admin::PostsHelper, Blogit::Admin::LayoutHelper
 
       
-      def current_user
-        @current_user ||= User.find(session[:user_id])
-      end
+      helper_method :blogit_conf, :current_blogger
       
-      alias_method :current_blogger, :current_user
+      
+      private
             
       
       def blogit_authenticate
@@ -37,6 +35,15 @@ module Blogit
         new_session_url
       end
 
+      def current_blogger
+        if defined?(super)
+          super
+        else
+          raise NotImplementedError, 
+            "Please define :current_blogger in your ApplicationController.\
+              Blogit::Admin needs this to determine who's signed in."
+        end
+      end
     end
     
   end
